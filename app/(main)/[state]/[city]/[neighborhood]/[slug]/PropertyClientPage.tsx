@@ -10,15 +10,15 @@ import { formatPrice } from "@/lib/utils"
 import type { Property } from "@/types"
 
 interface PropertyPageProps {
-  params: {
+  
     state: string
     city: string
     neighborhood: string
     slug: string
-  }
+  
 }
 
-export default function PropertyClientPage({ params }: PropertyPageProps) {
+export default function PropertyClientPage({ params }: any) {
   const [property, setProperty] = useState<Property | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
@@ -27,8 +27,9 @@ export default function PropertyClientPage({ params }: PropertyPageProps) {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
+        const dataResponse: PropertyPageProps = JSON.parse(params.value)
         const response = await fetch(
-          `/api/properties/${params.state}/${params.city}/${params.neighborhood}/${params.slug}`,
+          `/api/properties/${dataResponse.state}/${dataResponse.city}/${dataResponse.neighborhood}/${dataResponse.slug}`,
         )
 
         if (!response.ok) {
